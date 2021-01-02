@@ -2,6 +2,7 @@ var yoursumval = 0;
 var yoursumrival = 0;
 var yourval = document.querySelector(".your");
 var yourhands = document.querySelector(".yourhands");
+var yoursside = document.querySelector(".yourside");
 var next = document.querySelector(".next");
 var computerside = document.querySelector(".computerside");
 var computerhands = document.querySelector(".computerhands");
@@ -145,6 +146,7 @@ function play(e) {
     yourssum += parseInt(yourhands.children[a].children[0].textContent);
     
   }
+  // console.log(yourssum);
 
   for (let b = 0; b < computerhands.children.length; b++) {
     compsum += parseInt(computerhands.children[b].children[0].textContent);
@@ -172,8 +174,20 @@ function play(e) {
     
     
     }
-    if(property === "companion" && compsum >= yourssum)
+    if(property === "companion" && compsum >= yourssum) {
     console.log("companion ready");
+    setTimeout(() => {
+    var div = document.createElement("div");
+    div.classList.add("card-sample");
+    div.classList.add("card");
+    div.innerHTML += `<div>${value+1}</div><div>${property}</div>`;
+    div.innerHTML += `<button disabled class='card-play invisible'>Play</button>`;
+    div.style.backgroundColor = "rgb(66, 186, 226)";
+    yoursside.appendChild(div);
+
+  },500);
+  yoursumval+=value+1;
+  }
 
     yoursumval+=value;
     yourhands.removeChild(chosenone);
@@ -253,6 +267,10 @@ for (let j = 0; j < computerhands.children.length; j++) {
     
     }
     
+  }
+
+  if(computercard.children[1].textContent === "companion") {
+    yoursumrival += parseInt(computercard.children[1].textContent) + 1;
   }
   
 }
