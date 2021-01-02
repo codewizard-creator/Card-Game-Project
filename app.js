@@ -146,7 +146,6 @@ function play(e) {
     yourssum += parseInt(yourhands.children[a].children[0].textContent);
     
   }
-  // console.log(yourssum);
 
   for (let b = 0; b < computerhands.children.length; b++) {
     compsum += parseInt(computerhands.children[b].children[0].textContent);
@@ -220,6 +219,15 @@ function nextturn() {
   
   
 setTimeout(() => {
+  var yourssum = 0;
+  var compsum = 0;
+  for (let a = 0; a < yourhands.children.length; a++) {
+    yourssum += parseInt(yourhands.children[a].children[0].textContent);
+    
+  }
+  for (let b = 0; b < computerhands.children.length; b++) {
+    compsum += parseInt(computerhands.children[b].children[0].textContent);
+  }
   for (let k = 0; k < computerhands.children.length; k++) {
     computerhands.children[k].style.color = "black"; 
 }
@@ -269,9 +277,7 @@ for (let j = 0; j < computerhands.children.length; j++) {
     
   }
 
-  if(computercard.children[1].textContent === "companion") {
-    yoursumrival += parseInt(computercard.children[1].textContent) + 1;
-  }
+  
   
 }
 
@@ -288,6 +294,17 @@ if(card.children[1].textContent === "scout") {
     yourhands.children[rand].style.color = "red";
     var remainbutton = yourhands.children[rand].children[2];
     remainbutton.disabled = true;
+  }
+  if(card.children[1].textContent === "companion" && yourssum > compsum) {
+    var div2 = document.createElement("div");
+    div2.classList.add("card-computer");
+    div2.classList.add("card");
+    div2.innerHTML += `<div>${parseInt(card.children[0].textContent) + 1}</div><div>companion</div>`;
+    div2.innerHTML+="<button disabled class='card-play'>Play</button>";
+    computerside.appendChild(div2);
+    yoursumrival += parseInt(card.children[0].textContent) + 1;
+    comp.textContent = yoursumrival;
+
   }
 //count = 0;
 
