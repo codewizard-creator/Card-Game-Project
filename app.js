@@ -11,6 +11,7 @@ var count = 0;
 var cardsrival;
 var anewarr = [];
 var countforready = 0;
+var detailpagedata;
 
 class Cards {
     constructor(id, value, property, onboard) {
