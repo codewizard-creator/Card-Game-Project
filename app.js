@@ -11,7 +11,6 @@ var count = 0;
 var cardsrival;
 var anewarr = [];
 var countforready = 0;
-var detailpagedata;
 
 class Cards {
     constructor(id, value, property, onboard) {
@@ -140,6 +139,16 @@ function init() {
 }
 
 function play(e) {
+  var yourssum = 0;
+  var compsum = 0;
+  for (let a = 0; a < yourhands.children.length; a++) {
+    yourssum += parseInt(yourhands.children[a].children[0].textContent);
+    
+  }
+
+  for (let b = 0; b < computerhands.children.length; b++) {
+    compsum += parseInt(computerhands.children[b].children[0].textContent);
+  }
   // var yourval = document.querySelector(".your");
   // when you click play
   if (e.target.classList.contains("card-play")) {
@@ -163,6 +172,8 @@ function play(e) {
     
     
     }
+    if(property === "companion" && compsum >= yourssum)
+    console.log("companion ready");
 
     yoursumval+=value;
     yourhands.removeChild(chosenone);
