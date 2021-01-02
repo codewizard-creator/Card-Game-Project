@@ -1,0 +1,146 @@
+/*your card back color: rgb(66, 186, 226) */
+
+html {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.values {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.backimg {
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+}
+
+.card-sample {
+  position: relative;
+  margin-top: 1rem;
+  height: 9rem;
+  width: 6rem;
+  background-color: beige;
+  box-shadow: 5px 5px 15px -8px #000000;
+  text-align: center;
+  margin-left: 1.5rem;
+}
+.card {
+  margin-right: 0.1rem;
+  position: relative;
+  margin-top: 1rem;
+  padding-top: .3rem;
+  height: 9rem;
+  width: 6rem;
+  background-color: beige;
+  box-shadow: 5px 5px 15px -8px #000000;
+  text-align: center;
+  margin-left: 1.5rem;
+}
+
+.yourhands {
+  display: flex;
+  height: 50%;
+}
+
+.yourside {
+  display: flex;
+  height: 50%;
+  flex: .5;
+  justify-content: center;
+}
+
+.card-play {
+  position: absolute;
+  bottom: 1rem;
+  right: 1.7rem;
+}
+.your-card {
+  position: absolute;
+  bottom: 0.2rem;
+}
+.current {
+  font-size: 1.6rem;
+}
+
+.board-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 50%;
+  border-bottom: 0.1rem dashed white;
+}
+
+.computerhands {
+  height: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.computerside {
+  height: 50%;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.board-bottom {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; 
+
+}
+
+.board {
+  height: 100vh;
+  background-image: url(images/james-pond-909c1sEZYJo-unsplash.jpg);
+  background-position: center;
+  background-size: cover;
+  background-color: black;
+  flex: 0 0 70%;
+  
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.init {
+  margin-bottom: 2rem;
+}
+
+.sumcomputer {
+  display: flex;
+  justify-content: end;
+}
+
+.sumyou {
+  display: flex;
+  justify-content: end;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.none {
+  display: none;
+}
+
+.you {
+  background-color: rgb(66, 186, 226);
+}
+
