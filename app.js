@@ -170,9 +170,13 @@ function play(e) {
     computerhands.children[randomone].children[1].classList.remove("invisible");
     computerhands.children[randomone].children[1].classList.add("notready");
     computerhands.children[randomone].style.color = "red";
-    
+    computerhands.children[randomone].classList.add("animatescouted");
+    setTimeout(()=> {
+      computerhands.children[randomone].classList.remove("animatescouted");
+    },1300);
     
     }
+    
     if(property === "companion" && compsum >= yourssum) {
     console.log("companion ready");
     setTimeout(() => {
@@ -236,7 +240,6 @@ setTimeout(() => {
 
 for (let i = 0; i < yourhands.children.length; i++) {
   var yourcard = yourhands.children[i];
-  console.log(yourcard);
   //yourcard.style.color = "black";
   if(yourcard.children[1].textContent === "risk") {
     var prevyourval = parseInt(yourcard.children[0].textContent);
@@ -272,6 +275,7 @@ for (let j = 0; j < computerhands.children.length; j++) {
     computercard.children[1].classList.remove("invisible");
     computercard.children[0].classList.remove("invisible");
     computercard.children[2].disabled = false;
+
     
     }
     
@@ -294,6 +298,10 @@ if(card.children[1].textContent === "scout") {
     yourhands.children[rand].style.color = "red";
     var remainbutton = yourhands.children[rand].children[2];
     remainbutton.disabled = true;
+    yourhands.children[rand].classList.add("animatescouted");
+    setTimeout(()=> {
+      yourhands.children[rand].classList.remove("animatescouted");
+    },1300);
   }
   if(card.children[1].textContent === "companion" && yourssum > compsum) {
     var div2 = document.createElement("div");

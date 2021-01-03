@@ -1,5 +1,25 @@
 /*your card back color: rgb(66, 186, 226) */
 
+
+@keyframes visibility {
+  0% {
+    color:white;
+    background-color: beige;
+    transform: scale(1);
+  }
+
+  80% {
+    background-color: rgb(196, 68, 36);
+    color: white;
+    transform: scale(.8);
+  }
+
+  100% {
+    background-color: beige;
+    color: white;
+    transform: scale(.8);
+  }
+}
 html {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -31,7 +51,30 @@ html {
   box-shadow: 5px 5px 15px -8px #000000;
   text-align: center;
   margin-left: 1.5rem;
+  transition: all .5s;
+  outline: 3px transparent rgb(66, 186, 226);
 }
+
+.yourhands .card-sample:hover {
+  outline: 3px solid rgb(66, 186, 226);
+  outline-offset: .8rem;
+}
+
+.only-sample {
+  position: relative;
+  margin-top: 1rem;
+  height: 9rem;
+  width: 6rem;
+  background-color: beige;
+  box-shadow: 5px 5px 15px -8px #000000;
+  text-align: center;
+  margin-left: 1.5rem;
+  transition: all .5s;
+  outline: 3px transparent rgb(66, 186, 226);
+}
+
+
+
 .card {
   margin-right: 0.1rem;
   position: relative;
@@ -43,7 +86,9 @@ html {
   box-shadow: 5px 5px 15px -8px #000000;
   text-align: center;
   margin-left: 1.5rem;
+
 }
+
 
 .yourhands {
   display: flex;
@@ -142,5 +187,9 @@ html {
 
 .you {
   background-color: rgb(66, 186, 226);
+}
+
+.animatescouted {
+  animation: visibility 1.2s;
 }
 
