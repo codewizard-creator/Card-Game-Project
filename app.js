@@ -55,6 +55,8 @@ transformscout.addEventListener("click", transformlegislation);
 
 document.querySelector(".yourhands").addEventListener("mouseover", showtip);
 
+
+// **************** SHOW TIPS ***************
 function showtip(e) {
   if(e.target.classList.contains("card-sample")) {
     for (let p = 0; p < yourhands.children.length; p++) {
@@ -232,7 +234,12 @@ function nextturn() {
     next.disabled = true;
       setTimeout(() => {
         alertforgame.classList.add("alert-animate");
-        alertforgame.textContent = yoursumval > yoursumrival ? "VICTORY" : "DEFEAT";
+        if(yoursumval === yoursumrival)
+        alertforgame.textContent = "DRAW";
+        if(yoursumval > yoursumrival)
+        alertforgame.textContent = "VICTORY";
+        if(yoursumrival > yoursumval)
+        alertforgame.textContent = "DEFEAT";
       }, 400);
       
     return;
