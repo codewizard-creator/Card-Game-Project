@@ -1,3 +1,7 @@
+
+import Createcards  from "./card-createcards.js";
+import { transformlegislation } from "./transform.js";
+
 var yoursumval = 0;
 var yoursumrival = 0;
 var yourval = document.querySelector(".your");
@@ -8,21 +12,19 @@ var computerside = document.querySelector(".computerside");
 var computerhands = document.querySelector(".computerhands");
 var comp = document.querySelector(".comp");
 var turninfo = document.querySelector(".alert");
-var count = 0;
+var alertforgame = document.querySelector(".alert-middle");
+var transformscout = document.querySelector(".transform-scout");
+var countforlegis = 0;
 var cardsrival;
 var anewarr = [];
+var count = 0;
 var countforready = 0;
+alertforgame.textContent = "Click Start to Play the Game";
+setTimeout(() => {
+  alertforgame.classList.remove("alert-animate");
+},1000)
 
-class Cards {
-    constructor(id, value, property, onboard) {
-        this.id = id;
-        this.value = value;
-        this.property = property;
-        this.onboard = false;
-    }
-  
 
-}
 // Shuffle
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -33,41 +35,12 @@ function shuffle(a) {
 }
 
 // Create
-function Createcards() {
-  
-  var cardarr = [];
-  for (let i = 1; i <= 20; i++) {
-    var randomval = Math.floor(Math.random()*4) + 1;
-    var randompropkey = Math.floor(Math.random()*4) + 1;
-    switch (randompropkey) {
-      case 1:
-        var newcard = new Cards(i,randomval,"legislation");
-        cardarr.push(newcard);
-        break;
-        case 2:
-          var newcard = new Cards(i,randomval,"scout");
-          cardarr.push(newcard);
-        break;
-        case 3:
-          var newcard = new Cards(i,randomval,"risk");
-          cardarr.push(newcard);
-        break;
-        case 4:
-          var newcard = new Cards(i,randomval,"companion");
-          cardarr.push(newcard);
-        break;
-
-    }
-
-    
-  }
-return cardarr;
-}
 
 
 
 
-// DOMS
+
+// CLICK EVENTS
 
 document.querySelector(".init").addEventListener("click",init);
 
@@ -75,13 +48,18 @@ document.querySelector(".yourhands").addEventListener("click",play);
 
 document.querySelector(".next").addEventListener("click", nextturn);
 
+// For transform-scout 
 
-
-
-
-// init function
+transformscout.addEventListener("click", transformlegislation);
 
 function init() {
+  transformscout.style.display = "none";
+  transformscout.disabled = false;
+  alertforgame.classList.add("alert-animate");
+  alertforgame.textContent = "YOUR TURN";
+  setTimeout(() => {
+    alertforgame.classList.remove("alert-animate");
+  },1000)
   var randomkeyscomputer = [0,1,2,3,4];
   var randomkeysyours = [0,1,2,3,4];
   shuffle(randomkeyscomputer);
@@ -102,7 +80,6 @@ function init() {
   yourhands.innerHTML = "";
   var cards = Createcards();
   var cardsrival = Createcards();
-  turninfo.textContent = "your turn";
   window.newrandom = 0;
   window.newrandom2 = 0;
   // your cards
@@ -118,7 +95,7 @@ function init() {
   div.classList.add("card");
   div.innerHTML += `<div>${cards[i].value}</div><div>${cards[i].property}</div>`;
   div.innerHTML += `<button class='card-play'>Play</button>`;
-  div.style.backgroundColor = "rgb(66, 186, 226)";
+  div.style.backgroundColor = "rgb(100, 196, 228)";
   yourhands.appendChild(div);
   }
   // computer cards
@@ -139,7 +116,13 @@ function init() {
 
 }
 
+
+
+
+// Play function
+
 function play(e) {
+  // *******NEED THIS CALCULATION FOR COMPANION ADDITION************
   var yourssum = 0;
   var compsum = 0;
   for (let a = 0; a < yourhands.children.length; a++) {
@@ -162,10 +145,12 @@ function play(e) {
     if(property === "scout") {
       countforready = 0;
       var randomone = Math.floor(Math.random()*computerhands.children.length);
-      // while(!computerhands.children[randomone].children[0].classList.contains("invisible")) 
-      // var randomone = Math.floor(Math.random()*computerhands.children.length);
+      // ************ Select From Invisible **************
+      while(!computerhands.children[randomone].children[0].classList.contains("invisible")) { 
+      var randomone = Math.floor(Math.random()*computerhands.children.length);
+      }
 
-    
+      
     computerhands.children[randomone].children[0].classList.remove("invisible");
     computerhands.children[randomone].children[1].classList.remove("invisible");
     computerhands.children[randomone].children[1].classList.add("notready");
@@ -183,14 +168,20 @@ function play(e) {
     var div = document.createElement("div");
     div.classList.add("card-sample");
     div.classList.add("card");
+    div.classList.add("card-extra");
     div.innerHTML += `<div>${value+1}</div><div>${property}</div>`;
     div.innerHTML += `<button disabled class='card-play invisible'>Play</button>`;
-    div.style.backgroundColor = "rgb(66, 186, 226)";
+    div.style.backgroundColor = "rgb(66, 186, 226)"; // yeni companion bir tık açık veya koyu olmalı
     yoursside.appendChild(div);
 
   },500);
   yoursumval+=value+1;
   }
+
+//  if(property === "legislation") {
+    
+    
+//  }
 
     yoursumval+=value;
     yourhands.removeChild(chosenone);
@@ -207,18 +198,67 @@ function play(e) {
 }
 
 
-// Next Turn NextClick Event
+//********** Next Turn NextClick Event***************
 function nextturn() {
-  // Rival's turn
-  var yourhands = document.querySelector(".yourhands");
-  window.newrandom = Math.floor(Math.random()*4) + 1;
-  console.log(newrandom);
-  window.newrandom2 = Math.floor(Math.random()*4) + 1;
+
+  //******** GAME OVER **********
+  var sumonscreen = computerside.children.length + yoursside.children.length;
+  console.log(sumonscreen);
+  if(sumonscreen >= 9) { 
+    next.disabled = true;
+      setTimeout(() => {
+        alertforgame.classList.add("alert-animate");
+        alertforgame.textContent = yoursumval > yoursumrival ? "VICTORY" : "DEFEAT";
+      }, 400);
+      
+    return;
+}
+  setTimeout(() => {
+
+    // Legislation company bridge
+    for (let h = 0; h < yoursside.children.length; h++) {
+     if(yoursside.children[h].classList.contains("card-extra")) {
+       break;
+     } else if(h === yoursside.children.length - 1) {
+       for (let k = 0; k < yoursside.children.length; k++) {
+        if(yoursside.children[k].children[1].textContent === "companion")
+        transformscout.style.display = "block";
+        
+       }
+     }
+      
+    }
+  },200)
+
+
+  // Turn Message Toggle
+  alertforgame.classList.add("alert-animate");
+  alertforgame.textContent = "RIVALS TURN";
+  setTimeout(() => {
+    alertforgame.classList.remove("alert-animate");
+  },1000)
+
+  setTimeout(() => {
+    alertforgame.classList.add("alert-animate");
+    alertforgame.textContent = "YOUR TURN";
+  },1900)
+  setTimeout(() => {
+    alertforgame.classList.remove("alert-animate");
+  },2900)
    // For increasing the risk card
+ // var yourhands = document.querySelector(".yourhands");
+  window.newrandom = Math.floor(Math.random()*5) + 1;
+  window.newrandom2 = Math.floor(Math.random()*5) + 1;
+   // Rival's turn
   next.disabled = true;
+  
   var random = Math.floor(Math.random() * computerhands.children.length);
   while(computerhands.children[random].children[1].classList.contains("notready") && countforready === 0) {
     var random = Math.floor(Math.random() * computerhands.children.length);
+    if(computerhands.children.length === 1 && computerhands.children[random].children[1].classList.contains("notready")) {
+      random = -1;
+      break;
+    }
   }
   
   
@@ -266,7 +306,7 @@ for (let j = 0; j < computerhands.children.length; j++) {
   if(computercard.children[1].textContent === "risk") {
     var prevcompval = parseInt(computercard.children[0].textContent);
     prevcompval += newrandom2;
-    computercard.style.color = "royalblue";
+    computercard.style.color = "black";
     computercard.children[0].textContent = prevcompval;
     if(computercard.children[0].textContent > 8) {
      computercard.children[0].textContent = riskoriginalrival;
@@ -284,8 +324,23 @@ for (let j = 0; j < computerhands.children.length; j++) {
   
   
 }
-
-
+var computerhandssum = 0;
+for (let l = 0; l < computerhands.children.length; l++) {
+    computerhandssum += parseInt(computerhands.children[l].children[0].textContent);
+}
+console.log(computerhandssum);
+if(random !== -1) {
+  // *********** COMPUTER'S TURN POSSIBILITIES MANAGEMENT **********
+for (let t = 0; t < computerhands.children.length; t++) {
+  if(computerhands.children[t].children[1].textContent === "risk" && parseInt(computerhands.children[t].children[0].textContent) >= 6 && !(computerhands.children[t].children[1].classList.contains("notready"))) {
+    random = t;
+    break;
+  }
+  if(computerhands.children[t].children[1].textContent === "companion" && computerhandssum < 15 && !(computerhands.children[t].children[1].classList.contains("notready"))) {
+  random = t;
+  break;
+}
+}
 var card = computerhands.children[random];
 computerhands.children[random].children[0].classList.remove("invisible");
 computerhands.children[random].children[1].classList.remove("invisible");
@@ -293,7 +348,9 @@ computerhands.removeChild(card);
 computerside.appendChild(card);
 yoursumrival += parseInt(card.children[0].textContent);
 comp.textContent = yoursumrival;
-if(card.children[1].textContent === "scout") {
+} else
+return;
+if(card.children[1].textContent === "scout" ) {
     var rand = Math.floor(Math.random() * yourhands.children.length);
     yourhands.children[rand].style.color = "red";
     var remainbutton = yourhands.children[rand].children[2];
@@ -325,13 +382,12 @@ setTimeout(() => {
     remainbuttons.disabled = false;
   }
     for (let j = 0; j < computerhands.children.length; j++) {
-      computerhands.children[j].style.color = "black"; 
+      computerhands.children[j].style.color = "royalblue"; 
   }
   
   
   },799);
   
-
 
 
 

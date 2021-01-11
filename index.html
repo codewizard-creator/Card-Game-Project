@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Card Game</title>
     <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
     <div class="container">
     
     
     <div class="board">
+        <div class="alert-middle alert-animate"></div>
         <div class="board-top">
             <div class="computerhands">
                 <!--<div class="card card-computer">
@@ -45,13 +47,15 @@
         <div class="sumcomputer">
             <h2 class="opponent">Rival</h2> 
             <span class="comp current">0</span>
-            <div class="only-sample sample"></div>
+            <div class="only-sample sample rival"></div>
         </div>
      
         <div class="control">
             <button class="init">Start</button>
             <button class="next">next</button>
-            <p class="alert"></p>
+            <div class="alert">
+                <button class="transform-scout">Become a scout</button>
+            </div>
 
         </div>
         <div class="sumyou">
@@ -67,6 +71,6 @@
 
     
 
-<script src="app.js"></script>
+<script type="module" defer src="app.js"></script>
 </body>
 </html>
