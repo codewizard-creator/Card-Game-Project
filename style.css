@@ -1,5 +1,23 @@
 /*your card back color: rgb(66, 186, 226) */
 /*computer card color: bisque */
+
+
+@keyframes tooltipshow {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 @keyframes extracompanion {
   0% {
     top: 4rem;
@@ -260,4 +278,30 @@ html {
 .card-extra {
   animation-name: extracompanion;
   animation-duration: 1s;
+}
+
+/* TOOLTİP */
+
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: white;
+  color: rgb(38, 137, 167);
+  text-align: center;
+  border-radius: 3px;
+  padding: 0.5rem 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+  font-style: italic;
+  font-size: .8rem;
+}
+
+.card-sample:hover .tooltiptext {
+ animation-name: tooltipshow;
+ animation-duration: 1s;
+ animation-fill-mode: forwards;
 }

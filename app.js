@@ -52,6 +52,29 @@ document.querySelector(".next").addEventListener("click", nextturn);
 
 transformscout.addEventListener("click", transformlegislation);
 
+
+document.querySelector(".yourhands").addEventListener("mouseover", showtip);
+
+function showtip(e) {
+  if(e.target.classList.contains("card-sample")) {
+    for (let p = 0; p < yourhands.children.length; p++) {
+      if(yourhands.children[p].children[1].textContent === "scout")
+      yourhands.children[p].children[3].textContent = "The Scout Card makes one of the cards in the opponent's hand visible. The rival cannot play that card for one turn";
+      if(yourhands.children[p].children[1].textContent === "companion")
+      yourhands.children[p].children[3].textContent = "if the sum of the values in the opponent's hand is greater than in your hand, that card a companion card with an +1 value is formed next to it."
+      if(yourhands.children[p].children[1].textContent === "risk") {
+        yourhands.children[p].children[3].textContent = "At the end of the hand, the value of the risk card increases from 1 to 5.If the value is greater than 8, it returns to its original state and it falls into the hands of the opponent."
+      }
+      if(yourhands.children[p].children[1].textContent === "legislation") {
+        yourhands.children[p].children[3].textContent = "if the effect does not occur after playing the companion card, you can turn it into a scout at the end of the round.";
+      }
+
+
+    }
+  }
+  
+}
+
 function init() {
   transformscout.style.display = "none";
   transformscout.disabled = false;
@@ -95,6 +118,7 @@ function init() {
   div.classList.add("card");
   div.innerHTML += `<div>${cards[i].value}</div><div>${cards[i].property}</div>`;
   div.innerHTML += `<button class='card-play'>Play</button>`;
+  div.innerHTML += '<span class="tooltiptext"></span>';
   div.style.backgroundColor = "rgb(100, 196, 228)";
   yourhands.appendChild(div);
   }
