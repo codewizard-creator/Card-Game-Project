@@ -56,7 +56,7 @@ transformscout.addEventListener("click", transformlegislation);
 document.querySelector(".yourhands").addEventListener("mouseover", showtip);
 
 
-// **************** SHOW TIPS ***************
+// **************** SHOW TIPS FUNCTİON ***************
 function showtip(e) {
   if(e.target.classList.contains("card-sample")) {
     for (let p = 0; p < yourhands.children.length; p++) {
@@ -65,7 +65,7 @@ function showtip(e) {
       if(yourhands.children[p].children[1].textContent === "companion")
       yourhands.children[p].children[3].textContent = "if the sum of the values in the opponent's hand is greater than in your hand, that card a companion card with an +1 value is formed next to it."
       if(yourhands.children[p].children[1].textContent === "risk") {
-        yourhands.children[p].children[3].textContent = "At the end of the hand, the value of the risk card increases from 1 to 5.If the value is greater than 8, it returns to its original state and it falls into the hands of the opponent."
+        yourhands.children[p].children[3].textContent = "At the end of the turn, the value of the risk card increases from 1 to 5.If the value is greater than 8, it returns to its original state and it falls into the hands of the opponent."
       }
       if(yourhands.children[p].children[1].textContent === "legislation") {
         yourhands.children[p].children[3].textContent = "if the effect does not occur after playing the companion card, you can turn it into a scout at the end of the round.";
@@ -148,7 +148,7 @@ function init() {
 // Play function
 
 function play(e) {
-  // *******NEED THIS CALCULATION FOR COMPANION ADDITION************
+  // *******NEED THIS CALCULATION FOR COMPANION CARD************
   var yourssum = 0;
   var compsum = 0;
   for (let a = 0; a < yourhands.children.length; a++) {
@@ -197,14 +197,14 @@ function play(e) {
     div.classList.add("card-extra");
     div.innerHTML += `<div>${value+1}</div><div>${property}</div>`;
     div.innerHTML += `<button disabled class='card-play invisible'>Play</button>`;
-    div.style.backgroundColor = "rgb(66, 186, 226)"; // yeni companion bir tık açık veya koyu olmalı
+    div.style.backgroundColor = "rgb(66, 186, 226)";
     yoursside.appendChild(div);
 
   },500);
   yoursumval+=value+1;
   }
 
-//  if(property === "legislation") {
+//  if (property === "legislation") {
     
     
 //  }
@@ -363,13 +363,12 @@ console.log(computerhandssum);
 if(random !== -1) {
   // *********** COMPUTER'S TURN POSSIBILITIES MANAGEMENT **********
 for (let t = 0; t < computerhands.children.length; t++) {
-  if(computerhands.children[t].children[1].textContent === "risk" && parseInt(computerhands.children[t].children[0].textContent) >= 6 && !(computerhands.children[t].children[1].classList.contains("notready"))) {
+  if(computerhands.children[t].children[1].textContent === "risk" && parseInt(computerhands.children[t].children[0].textContent) >= 4 && !(computerhands.children[t].children[1].classList.contains("notready"))) {
     random = t;
-    break;
   }
   if(computerhands.children[t].children[1].textContent === "companion" && computerhandssum < 15 && !(computerhands.children[t].children[1].classList.contains("notready"))) {
   random = t;
-  break;
+  
 }
 }
 var card = computerhands.children[random];
@@ -379,6 +378,10 @@ computerhands.removeChild(card);
 computerside.appendChild(card);
 yoursumrival += parseInt(card.children[0].textContent);
 comp.textContent = yoursumrival;
+
+// var sumonscreen2 = computerside.children.length + yoursside.children.length;
+
+
 } else
 return;
 if(card.children[1].textContent === "scout" ) {
@@ -423,5 +426,13 @@ setTimeout(() => {
 
 
   countforready = 1;
-
+ if(countforready === 1) {
+   setTimeout(() => {
+    for (let k = 0; k < computerhands.children.length; k++) {
+      computerhands.children[k].children[1].classList.remove("notready");
+    }
+   },1000)
+ 
+   
+ }
 }
