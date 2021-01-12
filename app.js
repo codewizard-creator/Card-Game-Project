@@ -168,7 +168,7 @@ function play(e) {
     var value = parseInt(e.target.previousSibling.previousSibling.textContent);
     var property = e.target.previousSibling.textContent;
     // when you use scout card
-    if(property === "scout") {
+    if(property === "scout" && computerhands.children.length > 0) {
       countforready = 0;
       var randomone = Math.floor(Math.random()*computerhands.children.length);
       // ************ Select From Invisible **************
@@ -384,7 +384,9 @@ comp.textContent = yoursumrival;
 
 } else
 return;
-if(card.children[1].textContent === "scout" ) {
+if(card.children[1].textContent === "scout") {
+  if(yourhands.children.length === 1)
+    next.disabled = false;
     var rand = Math.floor(Math.random() * yourhands.children.length);
     yourhands.children[rand].style.color = "red";
     var remainbutton = yourhands.children[rand].children[2];
@@ -432,7 +434,13 @@ setTimeout(() => {
       computerhands.children[k].children[1].classList.remove("notready");
     }
    },1000)
- 
    
+
  }
+
+
+ setTimeout(() => {
+  if(yourhands.children.length === 0)
+    next.disabled = false;
+ },1500)
 }
