@@ -15,6 +15,8 @@ var turninfo = document.querySelector(".alert");
 var alertforgame = document.querySelector(".alert-middle");
 var transformscout = document.querySelector(".transform-scout");
 var countforlegis = 0;
+var countforlegisrival = 0;
+var countforreduce = 0;
 var cardsrival;
 var anewarr = [];
 var count = 0;
@@ -70,6 +72,9 @@ function showtip(e) {
       if(yourhands.children[p].children[1].textContent === "legislation") {
         yourhands.children[p].children[3].textContent = "if the effect does not occur after playing the companion card, you can turn it into a scout at the end of the round.";
       }
+      if(yourhands.children[p].children[1].textContent === "reducer") {
+        yourhands.children[p].children[3].textContent = "as long as you play this card or there is a 'reducer card' on the ground, the value of other enemy cards on the ground is reduced by one. The effect ends when one of the enemy cards is destroyed";
+      }
 
 
     }
@@ -78,6 +83,9 @@ function showtip(e) {
 }
 
 function init() {
+  countforreduce = 0;
+  countforlegis = 0;
+  countforlegisrival = 0;
   transformscout.style.display = "none";
   transformscout.disabled = false;
   alertforgame.classList.add("alert-animate");
@@ -114,7 +122,7 @@ function init() {
     cards[randomkeysyours[1]].property = "scout";
     cards[randomkeysyours[2]].property = "companion";
     cards[randomkeysyours[3]].property = "legislation";
-    cards[randomkeysyours[4]].property = "legislation";
+    cards[randomkeysyours[4]].property = "reducer";
   var div = document.createElement("div");
   div.classList.add("card-sample");
   div.classList.add("card");
@@ -131,7 +139,7 @@ function init() {
     cardsrival[randomkeyscomputer[1]].property = "scout";
     cardsrival[randomkeyscomputer[2]].property = "companion";
     cardsrival[randomkeyscomputer[3]].property = "legislation";
-    cardsrival[randomkeyscomputer[4]].property = "legislation";
+    cardsrival[randomkeyscomputer[4]].property = "reducer";
   var div2 = document.createElement("div");
   div2.classList.add("card-computer");
   div2.classList.add("card");
@@ -153,9 +161,7 @@ function play(e) {
   var compsum = 0;
   for (let a = 0; a < yourhands.children.length; a++) {
     yourssum += parseInt(yourhands.children[a].children[0].textContent);
-    
   }
-
   for (let b = 0; b < computerhands.children.length; b++) {
     compsum += parseInt(computerhands.children[b].children[0].textContent);
   }
@@ -167,6 +173,33 @@ function play(e) {
     var chosenone = e.target.parentElement;
     var value = parseInt(e.target.previousSibling.previousSibling.textContent);
     var property = e.target.previousSibling.textContent;
+
+    // ************ 'REDUCER' REDUCES YOUR RIVAL CARDS VALUE **************
+    setTimeout(() => {
+      if(countforlegis === 0) {
+        var count = 0;
+        for (let m = 0; m < yoursside.children.length; m++) {
+          if(yoursside.children[m].children[1].textContent === "reducer") {
+            for (let t = 0; t < computerside.children.length; t++) {
+              if(computerside.children[t].children[0].textContent <= 0)
+              count+=1;
+              computerside.children[t].children[0].textContent -= 1;
+              if(t === computerside.children.length - 1) {
+                comp.textContent -= computerside.children.length - count;
+                yoursumrival -= computerside.children.length - count;
+              }
+              if(parseInt(computerside.children[t].children[0].textContent) <= 0) {
+                computerside.children[t].style.display = "none";
+                countforlegis = 1;
+              }
+            }
+  
+          }
+          
+        }
+      }
+    }, 300);
+    
     // when you use scout card
     if(property === "scout" && computerhands.children.length > 0) {
       countforready = 0;
@@ -204,10 +237,22 @@ function play(e) {
   yoursumval+=value+1;
   }
 
-//  if (property === "legislation") {
+
+/*  if (property === "reducer" && countforlegis === 0) {
+    for (let j = 0; j < computerside.children.length; j++) {
+      computerside.children[j].children[0].textContent -= 1;
+      if(j === computerside.children.length - 1) {
+      comp.textContent -= computerside.children.length;
+      yoursumrival -= computerside.children.length;
+    }
+      if(computerside.children[j].children[0].textContent == 0) {
+      computerside.removeChild(computerside.children[j]);
+      countforlegis=1;
+    }
+    }
     
-    
-//  }
+}
+*/
 
     yoursumval+=value;
     yourhands.removeChild(chosenone);
@@ -226,11 +271,10 @@ function play(e) {
 
 //********** Next Turn NextClick Event***************
 function nextturn() {
-
+  var sumonhands = 3;
   //******** GAME OVER **********
-  var sumonscreen = computerside.children.length + yoursside.children.length;
-  console.log(sumonscreen);
-  if(sumonscreen >= 9) { 
+  sumonhands = computerhands.children.length + yourhands.children.length;
+  if(sumonhands < 1) {
     next.disabled = true;
       setTimeout(() => {
         alertforgame.classList.add("alert-animate");
@@ -363,13 +407,13 @@ console.log(computerhandssum);
 if(random !== -1) {
   // *********** COMPUTER'S TURN POSSIBILITIES MANAGEMENT **********
 for (let t = 0; t < computerhands.children.length; t++) {
-  if(computerhands.children[t].children[1].textContent === "risk" && parseInt(computerhands.children[t].children[0].textContent) >= 4 && !(computerhands.children[t].children[1].classList.contains("notready"))) {
+  if(computerhands.children[t].children[1].textContent === "risk" && parseInt(computerhands.children[t].children[0].textContent) >= 5 && !(computerhands.children[t].children[1].classList.contains("notready"))) {
     random = t;
   }
-  if(computerhands.children[t].children[1].textContent === "companion" && computerhandssum < 15 && !(computerhands.children[t].children[1].classList.contains("notready"))) {
-  random = t;
+  //if(computerhands.children[t].children[1].textContent === "companion" && computerhandssum < 15 && !(computerhands.children[t].children[1].classList.contains("notready"))) {
+  //random = t;
   
-}
+//}
 }
 var card = computerhands.children[random];
 computerhands.children[random].children[0].classList.remove("invisible");
@@ -407,9 +451,42 @@ if(card.children[1].textContent === "scout") {
     comp.textContent = yoursumrival;
 
   }
+
+  //if(card.children[1].textContent === "reducer" && computerhands.children.length > 0)
+    //countforreduce +=1;
+  
+
+  
 //count = 0;
 
+
+//*********** 'REDUCER' REDUCES YOUR CARD VALUES *************
 },1000);
+ // if(countforreduce > 0)
+setTimeout(() => {
+  if(countforlegisrival === 0) {
+    var count2 = 0;
+    for (let m = 0; m < computerside.children.length; m++) {
+      if(computerside.children[m].children[1].textContent === "reducer") {
+        for (let t = 0; t < yoursside.children.length; t++) {
+          if(yoursside.children[t].children[0].textContent <= 0)
+          count2+=1;
+          yoursside.children[t].children[0].textContent -= 1;
+          if(t === yoursside.children.length - 1) {
+            yourval.textContent -= yoursside.children.length + count2;
+            yoursumval -= yoursside.children.length + count2;
+          }
+          if(yoursside.children[t].children[0].textContent <= 0) {
+            yoursside.children[t].style.display = "none";
+            countforlegisrival = 1;
+          }
+        }
+  
+      }
+      
+    }
+  }
+}, 1200);
 
   
 setTimeout(() => {
