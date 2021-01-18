@@ -1,7 +1,72 @@
 /*your card back color: rgb(66, 186, 226) */
-/*computer card color: bisque */
+/*computer card back color: bisque */
+
+@keyframes riskcardanimate {
+  0% {
+    
+    opacity: 0;
+    
+  }
+
+  50% {
+    opacity:  0;
+    font-size: 1.5rem;
+  }
+
+  75% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    font-size: 1.5rem;
+    background-color: lavender;
+
+  }
+}
+@keyframes fromuptodown {
+  0% {
+    top:10%;
+  }
+
+  100% {
+    top:50%;
+  }
+}
+
+@keyframes reduceroncards {
+  0% {
+    opacity: 1;
+  }
+  33% {
+    background-color: red;
+    opacity: .5;
+  }
+
+  66% {
+    background-color: initial;
+    opacity: .5;
+  }
+  100% {
+    background-color: red;
+    opacity: 1;
+  }
+
+}
 
 
+@keyframes foralerts {
+  0% {
+    margin-left: 0;
+  }
+
+  25% {
+    margin-left: -20rem;
+  }
+  100% {
+    visibility: hidden;
+  }
+}
 @keyframes tooltipshow {
   0% {
     opacity: 0;
@@ -106,6 +171,7 @@ html {
   margin-left: 1.5rem;
   transition: all .5s;
   outline: 3px transparent rgb(66, 186, 226);
+  background-color: rgb(100, 196, 228);
 }
 
 .rival {
@@ -116,6 +182,7 @@ html {
   outline: 3px solid rgb(66, 186, 226);
   outline-offset: .8rem;
 }
+
 
 .only-sample {
   position: relative;
@@ -271,8 +338,28 @@ html {
   margin-left: 2.4rem;
 }
 
+
+/* FOR TUTORIAL */
 .alert {
-  margin-top: 2rem;
+  padding: 1rem;
+  width: 20rem;
+  min-height: 4rem;
+  border: .4rem solid white;
+  border-radius: 2rem;
+  background-color: khaki;
+  margin-left: -20rem;
+}
+
+.yourhandsborder {
+  border: 3.5px solid orangered;
+  width: 90%;
+  margin: 2rem auto;
+}
+
+.alertanimation {
+  animation-name: foralerts;
+  animation-duration: 7s;
+  animation-fill-mode: forwards;
 }
 
 .card-extra {
@@ -304,4 +391,71 @@ html {
  animation-name: tooltipshow;
  animation-duration: 1s;
  animation-fill-mode: forwards;
+}
+
+.skip {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tutorial-end {
+  position: relative;
+  background: linear-gradient( white,transparent);
+  border-radius: .8rem;
+  width: 25rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  padding: 1rem 0;
+  z-index: 10;
+  display: none;
+  animation-name: fromuptodown;
+  animation-duration: 1.5s;
+
+}
+
+.tutorial-end button {
+  margin-right: .65rem;
+  margin-left: .65rem;
+  background-color: skyblue;
+  border-bottom: 2px solid black;
+  padding: .2rem;
+  cursor: pointer;
+}
+.tutorial-end button:hover {
+  background-color:darkturquoise;
+  transition: all .5s;
+  padding: .7rem;
+}
+
+.tutorial-end button:first-of-type {
+  margin-left: 1rem;
+}
+
+.tutorial-end h2 {
+  text-align: center;
+  margin-top: 0;
+  font-weight: 500;
+}
+
+
+.feature-learned-1, .feature-learned-2 {
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: royalblue;
+}
+
+.learned {
+  text-align: center;
+}
+
+.reducenow {
+  animation-name: reduceroncards;
+  animation-duration: 1s;
+}
+
+.your-risk-card {
+  animation-name: riskcardanimate;
+  animation-duration: 1.6s;
 }
