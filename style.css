@@ -3,24 +3,30 @@
 
 @keyframes riskcardanimate {
   0% {
-    
+    background-color: lavender;
     opacity: 0;
     
   }
 
   50% {
     opacity:  0;
-    font-size: 1.5rem;
+    background-color: lavender;
   }
 
   75% {
     opacity: 0;
+    background-color: lavender;
+  }
+
+  99% {
+    opacity: 0;
+    background-color: lavender;
   }
 
   100% {
     opacity: 1;
-    font-size: 1.5rem;
     background-color: lavender;
+    
 
   }
 }
@@ -389,7 +395,7 @@ html {
 
 .card-sample:hover .tooltiptext {
  animation-name: tooltipshow;
- animation-duration: 1s;
+ animation-duration: 2.3s;
  animation-fill-mode: forwards;
 }
 
@@ -457,5 +463,16 @@ html {
 
 .your-risk-card {
   animation-name: riskcardanimate;
-  animation-duration: 1.6s;
+  animation-duration: 1s;
 }
+
+.tutorial-again-3 {
+  text-align: center;
+  display: inline-block;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
