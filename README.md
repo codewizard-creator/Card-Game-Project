@@ -1,7 +1,5 @@
 # Card-Game-Project
 
-Try on netlify. https://stoic-yalow-cf3ad4.netlify.app/
-
 
 The opponent is the computer and you start having a total of 5 cards.
 
